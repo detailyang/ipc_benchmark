@@ -31,3 +31,9 @@
 # Debug files
 *.dSYM/
 *.su
+
+pipe
+fifo
+socketpair
+uds
+tcp
