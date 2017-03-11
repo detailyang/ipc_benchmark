@@ -1,7 +1,7 @@
-#! /bin/sh
+#! /bin/bash
 
-IPCS=("pipe" "fifo" "socketpair" "uds" "tcp")
-SIZE=("128" "512" "1024" "4096")
+readonly IPCS=(pipe fifo socketpair uds tcp)
+readonly SIZE=(128 512 1024 4096")
 
 for ipc in ${IPCS[@]}; do
     result=()
