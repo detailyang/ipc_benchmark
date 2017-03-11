@@ -21,4 +21,4 @@ tcp: tcp.c
 
 .PHONY: test
 test:
-	./run_tests.sh
+	sudo ./run_tests.sh
