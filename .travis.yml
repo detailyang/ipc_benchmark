@@ -7,4 +7,4 @@ language: c
 before_install:
   - make
 script:
-  - echo "success"
+  - make test
