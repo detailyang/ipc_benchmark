@@ -1,7 +1,7 @@
 #! /bin/bash
 
 readonly IPCS=(pipe fifo socketpair uds tcp)
-readonly SIZE=(128 512 1024)
+readonly SIZE=(128 512 1024 4096)
 
 for ipc in ${IPCS[@]}; do
     result=()
@@ -15,5 +15,4 @@ for ipc in ${IPCS[@]}; do
     for value in ${result[@]}; do
     printf "%s\n" $value
     done | column
-    echo ""
 done
