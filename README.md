@@ -1,7 +1,7 @@
 # ipc_benchmark
 IPC benchmark on Linux which is inspired by [APUE](http://www.apuebook.com/)
 
-#Test
+# Test
 
 Just Make style as the following :D
 
@@ -9,7 +9,7 @@ Just Make style as the following :D
 make && make test
 ```
 
-#Type
+# Type
 
 These are kinds of IPC in Linux as the following:
 
