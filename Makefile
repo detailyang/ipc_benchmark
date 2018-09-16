@@ -1,6 +1,6 @@
 CC := gcc
 CFLAGS := -g -Wall
-TARGET := pipe fifo socketpair uds tcp
+TARGET := pipe fifo socketpair uds tcp udp
 
 all: $(TARGET)
 
@@ -19,6 +19,12 @@ uds: uds.c
 tcp: tcp.c
 	$(CC) $(CFLAGS) -o $@ $<
 
+udp: udp.c
+	$(CC) $(CFLAGS) -o $@ $<
+
 .PHONY: test
 test:
 	sudo ./run_tests.sh
+
+clean:
+	rm $(TARGET)
