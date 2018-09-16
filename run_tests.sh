@@ -1,6 +1,6 @@
 #! /bin/bash
 
-readonly IPCS=(pipe fifo socketpair uds tcp)
+readonly IPCS=(pipe fifo socketpair uds tcp udp)
 readonly SIZE=(128 512 1024 4096)
 
 for ipc in ${IPCS[@]}; do
