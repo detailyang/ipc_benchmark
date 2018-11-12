@@ -37,6 +37,7 @@ fifo
 socketpair
 uds
 tcp
+udp
 
 fifo-ipc
 uds-ipc
