@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     }
 
     unlink("./fifo-ipc");
-    if (mkfifo("./fifo-ipc", 0000) == -1) {
+    if (mkfifo("./fifo-ipc", 0700) == -1) {
         perror("mkfifo");
         return 1;
     }
