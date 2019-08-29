@@ -3,7 +3,7 @@ import os
 import subprocess
 from prettytable import PrettyTable
 
-ipc_tests = ["pipe", "fifo", "socketpair", "uds", "tcp"]
+ipc_tests = ["pipe", "fifo", "socketpair", "uds", "tcp", "shm"]
 ipc_sizes = [128, 256, 512, 1024, 2048, 4096]
 ipc_count = 100000
 
