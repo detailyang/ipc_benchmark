@@ -159,7 +159,7 @@ int main(int argc, char const *argv[])
                count * 1.0 / tm, tm);
 
         sem_reserve(sem_id, WRITE_SEM);
-        union semun dummy;
+        union semun dummy = {0};
         semctl(sem_id, 0, IPC_RMID, dummy);
         if (shmdt(addr) == -1)
         {

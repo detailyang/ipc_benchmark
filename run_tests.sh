@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # Tests file binaries and test sizes
-ipc_tests="pipe fifo socketpair uds tcp udp"
+ipc_tests="pipe fifo socketpair uds tcp udp shm"
 ipc_sizes="128 256 512 1024 2048"
 ipc_count=10000
 
