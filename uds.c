@@ -31,54 +31,54 @@ int main(int argc, char *argv[]) {
 
     size = atoi(argv[1]);
     count = atoi(argv[2]);
-
     buf = malloc(size);
-    if (buf == NULL) {
-        perror("malloc");
-        return 1;
-    }
 
+    memset(&un, 0, sizeof(un));
     if (fork() == 0) {
         fd = socket(AF_UNIX, SOCK_STREAM, 0);
-
         unlink("./uds-ipc");
         un.sun_family = AF_UNIX;
         strcpy(un.sun_path, "./uds-ipc");
         len = offsetof(struct sockaddr_un, sun_path) + strlen("./uds-ipc");
+        
         if (bind(fd, (struct sockaddr *)&un, len) == -1) {
             perror("bind");
             return 1;
         }
 
-        listen(fd, 1024);
+        if (listen(fd, 128) == -1) {
+            perror("listen");
+            return 1;
+        }
+
         if ((nfd = accept(fd, NULL, NULL)) == -1) {
             perror("accept");
             return 1;
         }
         sum = 0;
-        for (i = 0; i < count; i++) {
+        for (;;) {
             n = read(nfd, buf, size);
-            if (n == -1) {
+            if (n == 0) {
+                break;
+            } else if (n == -1) {
+                perror("read");
                 return 1;
             }
-
             sum += n;
         }
 
         if (sum != count * size) {
+            fprintf(stderr, "sum error: %d != %d\n", sum, count * size);
             return 1;
         }
-
     } else {
         sleep(1);
 
         fd = socket(AF_UNIX, SOCK_STREAM, 0);
-
         un.sun_family = AF_UNIX;
         strcpy(un.sun_path, "./uds-ipc");
-        len = offsetof(struct sockaddr_un, sun_path) + strlen("./uds-ipc");
-        nfd = connect(fd,  (struct sockaddr *)&un, len);
-        if (fd == -1) {
+        len = offsetof(struct sockaddr_un, sun_path) + strlen("./uds-ipc");        
+        if (connect(fd,  (struct sockaddr *)&un, len) == -1) {
             perror("connect");
             return 1;
         }
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
         gettimeofday(&begin, NULL);
 
         for (i = 0; i < count; i++) {
-            if (write(nfd, buf, size) != size) {
+            if (write(fd, buf, size) != size) {
                 perror("wirte");
                 return 1;
             }
@@ -94,9 +94,10 @@ int main(int argc, char *argv[]) {
 
         gettimeofday(&end, NULL);
 
-        printf("%.0fMb/s %.0fmsg/s\n",
-            (count * size * 1.0 / getdetlatimeofday(&begin, &end)) * 8 / 1000000,
-            (count * 1.0 / getdetlatimeofday(&begin, &end)));
+        double tm = getdetlatimeofday(&begin, &end);
+        printf("%.0fMB/s %.0fmsg/s\n",
+            count * size * 1.0 / (tm * 1024 * 1024),
+            count * 1.0 / tm);
     }
 
     return 0;

@@ -2,8 +2,8 @@
 
 # Tests file binaries and test sizes
 ipc_tests="pipe fifo socketpair uds tcp udp"
-ipc_sizes="128 512 1024 4096"
-ipc_count=1024
+ipc_sizes="128 256 512 1024 2048"
+ipc_count=10000
 
 # Write to log file, keeps echo parameters
 write_log()

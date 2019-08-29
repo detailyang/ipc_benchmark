@@ -53,6 +53,7 @@ int main(int argc, char *argv[]) {
         }
 
         if (sum != count * size) {
+            fprintf(stderr, "sum error: %d != %d\n", sum, count * size);
             return 1;
         }
 
@@ -67,9 +68,10 @@ int main(int argc, char *argv[]) {
         }
         gettimeofday(&end, NULL);
 
-        printf("%.0fMb/s %.0fmsg/s\n",
-            (count * size * 1.0 / getdetlatimeofday(&begin, &end)) * 8 / 1000000,
-            (count * 1.0 / getdetlatimeofday(&begin, &end)));
+        double tm = getdetlatimeofday(&begin, &end);
+        printf("%.0fMB/s %.0fmsg/s\n",
+            count * size * 1.0 / (tm * 1024 * 1024),
+            count * 1.0 / tm);
     }
 
     return 0;

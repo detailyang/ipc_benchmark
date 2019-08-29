@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/time.h>
@@ -38,6 +39,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    memset(&in, 0, sizeof(in));
     if (fork() == 0) {
         fd = socket(AF_INET, SOCK_DGRAM, 0);
 
@@ -45,13 +47,13 @@ int main(int argc, char *argv[]) {
         in.sin_port = htons(15000);
         inet_pton(AF_INET, "127.0.0.1", &in.sin_addr);
 
+        yes = 1;
+        setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
+        
         if (bind(fd, (struct sockaddr *)&in, sizeof(in)) == -1) {
             perror("bind");
             return 1;
         }
-
-        yes = 1;
-        setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
 
         sum = 0;
         for (i = 0; i < count; i++) {
@@ -60,11 +62,11 @@ int main(int argc, char *argv[]) {
                 perror("recv");
                 return 1;
             }
-
             sum += n;
         }
 
         if (sum != count * size) {
+            fprintf(stderr, "sum error: %d != %d\n", sum, count * size);
             return 1;
         }
 
@@ -88,9 +90,10 @@ int main(int argc, char *argv[]) {
 
         gettimeofday(&end, NULL);
 
-        printf("%.0fMb/s %.0fmsg/s\n",
-            (count * size * 1.0 / getdetlatimeofday(&begin, &end)) * 8 / 1000000,
-            (count * 1.0 / getdetlatimeofday(&begin, &end)));
+        double tm = getdetlatimeofday(&begin, &end);
+        printf("%.0fMB/s %.0fmsg/s\n",
+            count * size * 1.0 / (tm * 1024 * 1024),
+            count * 1.0 / tm);
     }
 
     return 0;
