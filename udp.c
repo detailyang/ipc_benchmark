@@ -32,15 +32,10 @@ int main(int argc, char *argv[]) {
 
     size = atoi(argv[1]);
     count = atoi(argv[2]);
-
     buf = malloc(size);
-    if (buf == NULL) {
-        perror("malloc");
-        return 1;
-    }
 
     memset(&in, 0, sizeof(in));
-    if (fork() == 0) {
+    if (fork() == 0) { // parent
         fd = socket(AF_INET, SOCK_DGRAM, 0);
 
         in.sin_family = AF_INET;
@@ -58,18 +53,20 @@ int main(int argc, char *argv[]) {
         sum = 0;
         for (i = 0; i < count; i++) {
             n = recv(fd, buf, size, 0);
+            if (n == 0) {
+                break;
+            }
             if (n == -1) {
                 perror("recv");
                 return 1;
             }
             sum += n;
         }
-
         if (sum != count * size) {
             fprintf(stderr, "sum error: %d != %d\n", sum, count * size);
             return 1;
         }
-
+        close(fd);
     } else {
         sleep(1);
 
@@ -96,5 +93,6 @@ int main(int argc, char *argv[]) {
             count * 1.0 / tm);
     }
 
+    printf("OKOK-----------\n");
     return 0;
 }
