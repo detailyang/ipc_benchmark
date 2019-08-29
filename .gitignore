@@ -38,6 +38,7 @@ socketpair
 uds
 tcp
 udp
+shm
 
 fifo-ipc
 uds-ipc
