@@ -5,6 +5,6 @@ sudo: true
 dist: trusty
 language: c
 before_install:
-  - make
+  - make all
 script:
   - make test
