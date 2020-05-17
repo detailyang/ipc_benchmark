@@ -8,9 +8,17 @@
 #include <sys/types.h>
 #include <sys/time.h>
 
+typedef union {
+    int val;
+    struct semid_ds *buf;
+    unsigned short *array ;
+    struct seminfo *__buf;
+    void   *__pad ;
+} semun;
+
 void sem_init(int sem_id, int sem_num, int init_valve)
 {
-    union semun sem_union;
+    semun sem_union;
     sem_union.val = init_valve;
     if (semctl(sem_id, sem_num, SETVAL, sem_union))
     {
@@ -154,12 +162,12 @@ int main(int argc, char const *argv[])
         gettimeofday(&end, NULL);
 
         double tm = getdetlatimeofday(&begin, &end);
-        printf("%fMB/s %fmsg/s %f\n",
+        printf("%fMB/s %fmsg/s\n",
                count * size * 1.0 / (tm * 1024 * 1024),
-               count * 1.0 / tm, tm);
+               count * 1.0 / tm);
 
         sem_reserve(sem_id, WRITE_SEM);
-        union semun dummy = {0};
+        semun dummy = {0};
         semctl(sem_id, 0, IPC_RMID, dummy);
         if (shmdt(addr) == -1)
         {
