@@ -162,9 +162,9 @@ int main(int argc, char const *argv[])
         gettimeofday(&end, NULL);
 
         double tm = getdetlatimeofday(&begin, &end);
-        printf("%fMB/s %fmsg/s %f\n",
+        printf("%fMB/s %fmsg/s\n",
                count * size * 1.0 / (tm * 1024 * 1024),
-               count * 1.0 / tm, tm);
+               count * 1.0 / tm);
 
         sem_reserve(sem_id, WRITE_SEM);
         semun dummy = {0};
