@@ -7,4 +7,4 @@ language: c
 before_install:
   - make all
 install:
-  - travis_wait 30 make test
+  - make test
