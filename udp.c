@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
         fd = socket(AF_INET, SOCK_DGRAM, 0);
 
         in.sin_family = AF_INET;
-        in.sin_port = htons(15000);
+        in.sin_port = htons(15323);
         inet_pton(AF_INET, "127.0.0.1", &in.sin_addr);
 
         yes = 1;
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
         fd = socket(AF_INET, SOCK_DGRAM, 0);
 
         in.sin_family = AF_INET;
-        in.sin_port = htons(15000);
+        in.sin_port = htons(15323);
         inet_pton(AF_INET, "127.0.0.1", &in.sin_addr);
 
         gettimeofday(&begin, NULL);
