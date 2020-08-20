@@ -1,8 +1,8 @@
 
-// all test combined.
-// rather modify all the other files 
+// all test combined. Easier for ARM embedded target.
+// Rather modify all the other files 
 // I just pulled them in here and did some 
-// cleanup and turned them into function calls
+// cleanup and turned them into function calls.
 
 
 #include <stdio.h>
