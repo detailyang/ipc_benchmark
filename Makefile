@@ -69,17 +69,17 @@ udp: udp.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 .PHONY: shm
-## Compile shared memmory
+## Compile shared memory
 shm: shm.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 .PHONY: posixq
-## Compile shared memmory
+## Compile posix queue
 posixq: posixq.c
 	$(CC) $(CFLAGS) -o $@ $< -lrt
 
 .PHONY: ipc_bm
-## Compile shared memmory
+## Compile combined target
 ipc_bm: ipc_bm.c
 	$(CC) $(CFLAGS) -o $@ $< -lrt
 
