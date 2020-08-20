@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # Tests file binaries and test sizes
-ipc_tests="pipe fifo socketpair uds tcp udp shm"
+ipc_tests="posixq pipe fifo socketpair uds tcp shm udp"
 ipc_sizes="128 256 512 1024 2048"
 ipc_count=10000
 
@@ -43,9 +43,9 @@ do
     # Benchmark's actual data
     for tsize in ${ipc_sizes}
     do
-	result=$(./${test} ${tsize} ${ipc_count})
-	line1="${line1}|$(echo $result | cut -d ' ' -f1)"
-	line2="${line2}|$(echo $result | cut -d ' ' -f2)"
+	    result=$(./${test} ${tsize} ${ipc_count})
+	    line1="${line1}|$(echo $result | cut -d ' ' -f1)"
+	    line2="${line2}|$(echo $result | cut -d ' ' -f2)"
     done
     write_log "${line1}"
     write_log "${line2}"
