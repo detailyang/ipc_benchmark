@@ -1,6 +1,12 @@
+
+ifdef ARM
+CC := aarch64-linux-gnu-gcc
+else
 CC := gcc
+endif
+
 CFLAGS := -g -Wall
-TARGET := pipe fifo socketpair uds tcp udp shm
+TARGET := pipe fifo socketpair uds tcp udp shm posixq ipc_bm
 
 # Background color
 GREEN  				:= $(shell tput -Txterm setaf 2)
@@ -63,9 +69,20 @@ udp: udp.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 .PHONY: shm
-## Compile shared memmory
+## Compile shared memory
 shm: shm.c
 	$(CC) $(CFLAGS) -o $@ $<
+
+.PHONY: posixq
+## Compile posix queue
+posixq: posixq.c
+	$(CC) $(CFLAGS) -o $@ $< -lrt
+
+.PHONY: ipc_bm
+## Compile combined target
+ipc_bm: ipc_bm.c
+	$(CC) $(CFLAGS) -o $@ $< -lrt
+
 
 .PHONY: test
 ## Run benchmark tests

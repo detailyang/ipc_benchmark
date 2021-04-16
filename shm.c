@@ -162,7 +162,7 @@ int main(int argc, char const *argv[])
         gettimeofday(&end, NULL);
 
         double tm = getdetlatimeofday(&begin, &end);
-        printf("%fMB/s %fmsg/s\n",
+        printf("%.0fMB/s %.0fmsg/s\n",
                count * size * 1.0 / (tm * 1024 * 1024),
                count * 1.0 / tm);
 
