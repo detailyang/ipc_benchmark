@@ -6,7 +6,7 @@ IPC benchmark on Linux which is inspired by [APUE](http://www.apuebook.com/)
 Just Make style as the following :D
 
 ```bash
-make && make test
+make all && make test
 ```
 
 # Type
